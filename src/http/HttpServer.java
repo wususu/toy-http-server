@@ -20,6 +20,8 @@ public class HttpServer {
 	
 	private boolean isShutdown = false;
 	
+	private ServletProcessor servletProcessor = new ServletProcessor();
+	
 	public void await(){
 		ServerSocket serverSocket = null;
 		int port = 8888;
@@ -45,8 +47,13 @@ public class HttpServer {
 				request.parse();
 				
 				Response response = new Response(output, request);
-				response.sendStaticResource();
 				
+				if ( ServletUriManager.exists(request.getUri())){
+					servletProcessor.process(request, response);
+				}else {
+					response.sendStaticResource();
+				}
+
 				socket.close();
 				
 				
