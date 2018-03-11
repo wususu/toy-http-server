@@ -2,6 +2,7 @@ package http.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Map;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
@@ -13,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import http.HasherService;
-import http.Response;
+import http.HttpResponse;
 
 @HasherService(value="/index")
 public class IndexServlet implements Servlet{
@@ -40,9 +41,9 @@ public class IndexServlet implements Servlet{
 	@Override
 	public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		Map<String, String> map = req.getParameterMap();
 		PrintWriter writer = res.getWriter();
-		writer.println(Response.MSG_200_RAW + "<html><head><title>Servlet Response</title></head><body><h2>你好,我是IndexServlet</h2></body></html>");
-		writer.flush();
+		writer.println(HttpResponse.MSG_200_RAW + "<html><head><title>Servlet Response</title></head><body><h2>你好,我是IndexServlet</h2><p>"+map.toString() + "</p></body></html>");
 	}
 	@Override
 	public String getServletInfo() {

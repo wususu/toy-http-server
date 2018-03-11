@@ -36,7 +36,6 @@ public class ServletUriManager {
 
 		if (!lazeInit) {
 			 getBeansWithAnnon(classCache, servletUriCache);
-			System.out.println(servletUriCache.toString());
 		}
 	}
 	

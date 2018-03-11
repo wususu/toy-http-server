@@ -13,7 +13,7 @@ import java.net.Socket;
  * @author janke
  *
  */
-public class HttpServer {
+public class HttpConnector implements Runnable{
 	
 	public static final String WEB_ROOT = System.getProperty("user.dir") + File.separator + "webroot";
 	private static final String SHUTDOWN_COMMAND = "/SHUTDOWN";
@@ -40,35 +40,24 @@ public class HttpServer {
 			OutputStream output = null;
 			try{
 				socket = serverSocket.accept();
-				input = socket.getInputStream();
-				output = socket.getOutputStream();
+				new HttpProcessor().process(socket);
 
-				Request request = new Request(input);
-				request.parse();
-				
-				Response response = new Response(output, request);
-				
-				if ( ServletUriManager.exists(request.getUri())){
-					servletProcessor.process(request, response);
-				}else {
-					response.sendStaticResource();
-				}
-
-				socket.close();
-				
-				
-				if ((isShutdown = SHUTDOWN_COMMAND.equals(request.getUri())) == true) {
-					System.out.println("XHash 服务器关闭");
-				}
 			}catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
 			}
+			
 		}
 	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		await();
+	}
 	
-	public static void main(String[] args) {
-		HttpServer server = new HttpServer();
-		server.await();
+	public void start(){
+		Thread thread = new Thread(this);
+		thread.start();
 	}
 }
