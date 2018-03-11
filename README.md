@@ -19,3 +19,8 @@ USE:
 
 例如: 输入 http://127.0.0.1:8888/index 就能看到该servlet名
 
+### 3. POST/GET参数和Cookie支持:
+
+在请求Servlet地址时加上GET/POST参数,页面会显示发送参数的map
+
+例如: 输入 http://127.0.0.1:8888/index?name=hasher 就能看到该{"name"="hasher"}
