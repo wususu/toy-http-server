@@ -3,7 +3,7 @@ A toy http server power by java | 简单的http服务器 | Java NIO
 
 USE:
 
-### 1. 运行HttpServer.java
+### 1. 运行BootStrap.java
 
 打开浏览器输入 http://127.0.0.1:8888/{file_name}
 
